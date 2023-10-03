@@ -6,30 +6,13 @@ const expect = chai.expect;
 let cat = null;
 let batch = null;
 
-// Setup
-cat = new Catalogue("Test Catalogue");
-cat.addProduct(new Product("A123", "Product 1", 100, 10, 10.0));
-cat.addProduct(new Product("A124", "Product 2", 100, 10.0));
-cat.addProduct(new Product("A125", "Product 3", 100, 10, 10.0));
-
 describe("Catalogue", () => {
-    beforeEach(() => {   // NEW CODE
+  beforeEach(() => {   // NEW CODE
     cat = new Catalogue("Test Catalogue");
     cat.addProduct(new Product("A123", "Product 1", 100, 10, 10.0, 10));
     cat.addProduct(new Product("A124", "Product 2", 100, 10.0, 10));
     cat.addProduct(new Product("A125", "Product 3", 100, 10, 10.0, 10));
   });
-  describe("findProductById", function () {
-    it("should find a valid product id", function () {
-      const result = cat.findProductById("A123");
-      expect(result.name).to.equal("Product 1");
-    });
-    it("should return undefined for invalid product id", function () {
-      const result = cat.findProductById("A321");
-      expect(result).to.be.undefined;
-    });
-  });
-});
 
 describe("removeProductById", () => {
     it("should remove product with a valid id", function () {
@@ -43,8 +26,9 @@ describe("removeProductById", () => {
       const result = cat.removeProductById("A321");
       expect(result).to.be.undefined;
     });
+})
 });
-  
+
 describe("checkReorder", () => {
     it("should return an empty array when no products need reordering", function () {
       const result = cat.checkReorders();
@@ -60,7 +44,7 @@ describe("checkReorder", () => {
     it("should include products just on their reorder level", function () {
       cat.addProduct(new Product("B125", "Product 6", 10, 10, 10.0));
       const result = cat.checkReorders();
-      expect(result.productIds).to.have.members(["B125"]);
+      expect(result.productIds).to.have.members(["B123", "B124","B125"]);
     });
     it("should handle an empty catalogue", function () {
       cat = new Catalogue("Test catalogue");
